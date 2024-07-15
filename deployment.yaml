@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: to-dolist
+spec:
+  replicas: 1
+  selector:
+    matchLabels:   # Corrected typo from 'matchLables' to 'matchLabels'
+      app: to-dolist
+      version: v01
+  template:    # Corrected indentation
+    metadata:
+      labels:  # Corrected typo from 'lables' to 'labels'
+        app: to-dolist
+        version: v01
+    spec:
+      containers:
+      - name: nodeserver
+        image: devraj112/to-dolist:v1.0  # Corrected image reference
+        ports:
+        - containerPort: 5000
+        env:
+        - name: USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: secret
+              key: user
+        - name: PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secret
+              key: password
+
